@@ -29,7 +29,7 @@ setTimeout(function() {
                 if (typeof args[0] == 'object' && args[0].$class) {
                     var $class = args[0].$class;
                     $class = Array.isArray($class) ? $class : [$class];
-                    args[0] = $class.reduce(function(obj, key) {return obj[key]}, window);
+                    args[0] = $class.reduce(function(obj, key) {return obj[key]}, window.Widgets);
                 }
                 return React.createElement.apply(React, args);
             } else {

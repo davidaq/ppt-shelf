@@ -1,6 +1,6 @@
-import {Button, Card, Row, Col, Navbar, NavItem, Icon} from 'react-materialize';
 
-export default function(props, children) {
+export default function(props, children, widgets) {
+    var {Button, Card, Row, Col, Navbar, NavItem, Icon} = widgets.get('ReactMaterialize');
     return <include path="common/html" materialize>
         <Navbar brand="PPT-Shelf" left>
             <NavItem href='get-started.html'><Icon>search</Icon></NavItem>
