@@ -1,5 +1,5 @@
 import React from 'react';
-var {Button,Input,Preloader,Icon} = widgets.get('ReactMaterialize');
+var {Button,Input,Preloader,Icon,Toast} = widgets.get('ReactMaterialize');
 
 export class Login extends React.Component {
     componentWillMount() {
@@ -8,7 +8,7 @@ export class Login extends React.Component {
     render() {
         return <form id="loginForm" style={{height:'100%',background:'#EEE'}} onSubmit={this.login.bind(this)}>
             <div className="valign-wrapper" style={{height:'80%'}}>
-                <div className="card" style={{margin:'0 auto'}}>
+                <div className="card" style={{margin:'0 auto',minHeight:'350px'}}>
                     <div className="card-content center-align">
                         <Icon large>account_circle</Icon>
                         <Input name="username" label="用户名"/>
@@ -25,6 +25,13 @@ export class Login extends React.Component {
     login(e) {
         e.preventDefault();
         var fdata = $(ReactDOM.findDOMNode(this)).formData();
-        this.setState({loading:true});
+        ajax('/admin/login.page', fdata, _ => this.setState({loading:true}), r => {
+            this.setState({loading:false});
+            if (r.ok) {
+                document.location.replace('/admin.page');
+            } else {
+                Materialize.toast(r.error, 3000);
+            }
+        });
     }
 }

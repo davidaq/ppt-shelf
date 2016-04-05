@@ -1,23 +1,15 @@
 var gulp = require('gulp');
 var gutil = require('gulp-util');
-var cp = require('child_process');
-var merge = require('merge-stream');
-var fs = require('fs');
-var path = require('path');
-var buffer = require('vinyl-buffer');
-var gfile = require('gulp-file');
-var uglify = require('gulp-uglify');
 var rename = require('gulp-rename');
 var newer = require('gulp-newer');
 var filter = require('gulp-filter');
 var print = require('gulp-print');
 var foreach = require('gulp-foreach');
-var transform = require('gulp-transform');
-var data = require('gulp-data');
 var browserify = require('browserify');
-var vTransform = require('vinyl-transform');
-var source = require('vinyl-source-stream');
 var concat = require('concat-stream');
+var cp = require('child_process');
+var fs = require('fs');
+var path = require('path');
 
 function getFolders(dir) {
     return fs.readdirSync(dir)
