@@ -79,7 +79,7 @@ var Navbar = function (_React$Component) {
             { s: 12 },
             _react2.default.createElement(
               'a',
-              { href: '/', className: (0, _classnames2.default)(brandClasses) },
+              { href: '#', className: (0, _classnames2.default)(brandClasses) },
               brand
             ),
             _react2.default.createElement(

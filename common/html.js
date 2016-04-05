@@ -2,7 +2,11 @@ export default function(props={}, children, widgets) {
     return <html>
         <head>
             <meta charset="utf-8"/>
-            <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+            <meta name="renderer" content="webkit"/>
+            <meta http-equiv="X-UA-Compatible" content="IE=edge;chrome=1"/>
+            <meta http-equiv="Cache-Control" content="no-siteapp"/>
+            <meta http-equiv="Content-type" content="text/html;charset=utf-8"/>
+            <meta content="width=device-width, initial-scale=1, maximum-scale=1.2, user-scalable=0" name="viewport"/>
             <title>{props.title}</title>
             <script type="text/javascript" src="http://cdn.bootcss.com/jquery/2.2.1/jquery.min.js"/>
             <script type="text/javascript" src="/js/jq-ext.js"/>
