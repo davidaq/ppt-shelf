@@ -37,3 +37,23 @@ function ajax(url, params, cb1, cb2) {
         }
     }
 }
+function setQuery(params) {
+    var search = document.location.search;
+    if (search[0] == '?')
+        search = search.substr(1);
+    search = search.split('&');
+    var query = {};
+    search.map(function(v) {
+        v = v.split('=');
+        if (v[0])
+            query[decodeURIComponent(v[0])] = v[1];
+    });
+    for (var k in params) {
+        query[k] = encodeURIComponent(params[k]);
+    }
+    params = [];
+    for (var k in query) {
+        params.push(encodeURIComponent(k) + '=' + encodeURIComponent(query[k]));
+    }
+    document.location.href = '?' + params.join('&');
+}

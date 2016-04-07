@@ -1,0 +1,41 @@
+.cover-select {
+    overflow: hidden;
+    zoom: 1;
+}
+.cover-select .thumb {
+    display: block;
+    position: relative;
+    border: 1px solid #CCC;
+    width: 30%;
+    height: 0;
+    padding-bottom: 22%;
+    float: left;
+    margin-right: 1%;
+    margin-top: 1%;
+    background-size: cover;
+    background-position: center center;
+    box-shadow: #CCC 1px 1px 3px;
+    -webkit-box-shadow: #CCC 1px 1px 3px;
+    cursor: pointer;
+    -webkit-transition: -webkit-box-shadow 0.3s;
+}
+.cover-select .thumb:hover {
+    box-shadow: #AAA 1px 1px 5px;
+    -webkit-box-shadow: #777 1px 1px 5px;
+}
+.cover-select .thumb .selected {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    border: 3px solid #F00;
+}
+.content-list .thumb {
+    height: 0;
+    width: 100%;
+    padding-bottom: 75%;
+    background-size: cover;
+    background-position: center center;
+}

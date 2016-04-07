@@ -14,7 +14,7 @@ export default function(props, children, widgets) {
                     return {error:'昵称不得为空'};
                 return db.from('user').where({
                     _id: user._id
-                }).update(pdata.data).then(r => {
+                }).update({$set:pdata.data}).then(r => {
                     user.loginname = pdata.data.loginname;
                     user.username = pdata.data.username;
                     props.request.yar.set('login-user', user);
@@ -26,7 +26,7 @@ export default function(props, children, widgets) {
                 });
                 return db.from('settings').where({
                     _id: 'main'
-                }).update(pdata.data).then(r => {
+                }).update({$set:pdata.data}).then(r => {
                     return {ok:true};
                 });
             case 'password':
@@ -36,27 +36,19 @@ export default function(props, children, widgets) {
                 return db.from('user').where({
                     _id: user._id,
                     password: password(pdata.oldPassword)
-                }).update({
+                }).update({$set:{
                     password: password(pdata.newPassword)
-                }).then(r => {
+                }}).then(r => {
                     if (r)
                         return {ok:true};
                     return {error:'原密码错误'};
-                });
-                return db.from('user').where({
-                    _id: user._id
-                }).update(pdata.data).then(r => {
-                    user.loginname = pdata.data.loginname;
-                    user.username = pdata.data.username;
-                    props.request.yar.set('login-user', user);
-                    return {ok:true};
                 });
             }
             return {error:'未知操作'};
         } else {
             var {Settings} = widgets.get('admin');
             return db.from('settings').where({_id:'main'}).first().then(settings => {
-                return <include path="./nav" title="设置" user={user}>
+                return <include path="./nav" title="设置" user={user} active="settings">
                     <Settings user={user} siteSettings={settings}/>
                 </include>
             });

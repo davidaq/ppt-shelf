@@ -76,11 +76,13 @@ var Modal = function (_React$Component) {
             _react2.default.createElement(
               'div',
               { className: 'modal-footer' },
-              _react2.default.createElement(
+              this.props.btn1 || _react2.default.createElement(
                 _Button2.default,
                 { waves: 'light', modal: 'close', flat: true },
                 'Close'
-              )
+              ),
+              this.props.btn2,
+              this.props.btn3
             )
           ) },
         trigger

@@ -187,5 +187,6 @@ exports.Tabs = _Tabs3.default;
 exports.Table = _Table3.default;
 exports.Tag = _Tag3.default;
 exports.Toast = _Toast3.default;
+exports.MenuItem = require('./MenuItem').default;
 
 exports.initState = require('./idgen').resetID;

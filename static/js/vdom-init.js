@@ -33,11 +33,9 @@ setTimeout(function() {
                 }
                 return React.createElement.apply(React, args);
             } else {
-                var ret = [];
-                for (var i = 0; i < vdom.length; i++) {
-                    ret[i] = toReact(vdom[i]);
-                }
-                return vdom;
+                return vdom.map(function(v) {
+                    return toReact(v);
+                });
             }
         } else {
             return vdom;

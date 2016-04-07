@@ -4,12 +4,14 @@ var {Navbar,Icon,NavItem,Tooltip} = widgets.get('ReactMaterialize');
 
 export class NavBar extends React.Component {
     render() {
-        return <Navbar brand={this.props.brand} left href="">
-            <NavItem href='dashboard.page'><Icon left>trending_up</Icon>仪表盘</NavItem>
-            <NavItem href='contents.page'><Icon left>view_list</Icon>内容列表</NavItem>
-            <NavItem href="users.page"><Icon left>supervisor_account</Icon>用户列表</NavItem>
-            <NavItem href='settings.page'><Icon left>settings</Icon>设置</NavItem>
-            <NavItem href="login.page"><Icon left>power_settings_new</Icon>退出</NavItem>
+        return <Navbar brand={this.props.brand} left>
+            {this.item('contents', 'view_list', '内容列表')}
+            {this.item('users', 'supervisor_account', '用户列表')}
+            {this.item('settings', 'settings', '设置')}
+            {this.item('login', 'power_settings_new', '退出')}
         </Navbar>;
+    }
+    item(name, icon, title) {
+        return <NavItem className={name == this.props.active ? 'active':''} href={name + '.page'}><Icon left>{icon}</Icon>{title}</NavItem>
     }
 }

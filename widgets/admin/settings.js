@@ -16,7 +16,7 @@ export class Settings extends React.Component {
                     <Input label="允许自由注册" name="allowRegister" defaultChecked={this.props.siteSettings.allowRegister} type="checkbox"/>
                     <Input label="允许非注册用户下载" name="allowGuestDownload" defaultChecked={this.props.siteSettings.allowGuestDownload} type="checkbox"/>
                     <Input label="允许非管理员用户上传" name="allowNonAdminUpload" defaultChecked={this.props.siteSettings.allowNonAdminUpload} type="checkbox"/>
-                    <Input label="允许显示未审核的内容" name="showNotValidated" defaultChecked={this.props.siteSettings.showNotValidated} type="checkbox"/>
+                    <Input label="允许展示未审核的内容" name="showNotValidated" defaultChecked={this.props.siteSettings.showNotValidated} type="checkbox"/>
                 </Col>
             </Row>
             <SubmitBtn loading={this.state.savingSiteInfo} onClick={this.saveSiteInfo.bind(this)}>保存</SubmitBtn>

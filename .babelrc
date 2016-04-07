@@ -1,4 +1,4 @@
 {
   "presets": ["es2015"],
-  "plugins": ["jsx-cases-control","transform-react-jsx"]
+  "plugins": ["jsx-cases-control","jsx-control-statements","transform-react-jsx"]
 }
