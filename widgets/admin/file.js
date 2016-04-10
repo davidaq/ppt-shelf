@@ -69,7 +69,6 @@ export class FileArea extends React.Component {
             this.setState({progress: 2});
             var xhr = new XMLHttpRequest();
             xhr.upload.onprogress = e => {
-                console.log(e.loaded, e.total);
                 this.setState({progress:1 + Math.ceil((e.loaded / e.total) * 97)});
             };
             xhr.onreadystatechange = () => {
@@ -78,6 +77,7 @@ export class FileArea extends React.Component {
                 }
             };
             xhr.open('POST', this.props.postTo, true);
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             xhr.send('fileContent=' + encodeURIComponent(result));
         };
         reader.readAsDataURL(file);

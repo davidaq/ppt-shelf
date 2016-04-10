@@ -25,15 +25,18 @@ export default function(props, children, widgets) {
                 return {text:'处理中'};
             } else if (props.request.payload.fileContent) {
                 var id = shortid();
-                return new Promise(resolve => {
+                return new Promise((resolve,reject) => {
                     fs.mkdir('uploads', err => {
-                        var content = new Buffer(props.request.payload.fileContent, 'base64');
-                        fs.writeFile('uploads/' + id + '.upl', content, err => {
-                            resolve();
-                        });
+                        try {
+                            var content = new Buffer(props.request.payload.fileContent, 'base64');
+                            fs.writeFile('uploads/' + id + '.upl', content, err => {
+                                resolve();
+                            });
+                        } catch(e) {
+                            reject(e);
+                        }
                     });
                 }).then(_ => {
-                    console.log({id});
                     return {id};
                 }).catch(e => {
                     console.error(e.stack || e);
