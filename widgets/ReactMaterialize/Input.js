@@ -1,215 +1,172 @@
-'use strict';
+import React from 'react';
+import cx from 'classnames';
+import idgen from './idgen';
+import constants from './constants';
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _react = require('react');
-
-var _react2 = _interopRequireDefault(_react);
-
-var _classnames = require('classnames');
-
-var _classnames2 = _interopRequireDefault(_classnames);
-
-var _idgen = require('./idgen');
-
-var _idgen2 = _interopRequireDefault(_idgen);
-
-var _constants = require('./constants');
-
-var _constants2 = _interopRequireDefault(_constants);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Input = function (_React$Component) {
-  _inherits(Input, _React$Component);
-
-  function Input(props) {
-    _classCallCheck(this, Input);
-
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Input).call(this, props));
-
-    _this.state = { value: _this.props.defaultValue };
-    _this._onChange = _this._onChange.bind(_this);
-    _this.isSelect = _this.isSelect.bind(_this);
-    return _this;
+class Input extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {value: this.props.defaultValue};
+    this._onChange = this._onChange.bind(this);
+    this.isSelect = this.isSelect.bind(this);
   }
 
-  _createClass(Input, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      if (this.props.type === 'select' && !this.props.browserDefault && typeof $ !== 'undefined') {
-        $(this.refs.inputEl).material_select();
-        $(this.refs.inputEl).on('change', this._onChange);
-      }
+  componentDidMount() {
+    if (this.isMaterialSelect()) {
+      $(this.refs.inputEl).material_select();
+      $(this.refs.inputEl).on('change', this._onChange);
     }
-  }, {
-    key: '_onChange',
-    value: function _onChange(e) {
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.isMaterialSelect()) {
+      $(this.refs.inputEl).material_select();
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.isMaterialSelect()) {
       this.setState({
-        value: e.target.value
-      });
-      if (!!this.props.onChange) {
-        this.props.onChange(e);
-      }
+        value: nextProps.defaultValue
+      }, () => $(this.refs.inputEl).material_select());
     }
-  }, {
-    key: 'render',
-    value: function render() {
-      var _this2 = this;
+  }
 
-      var _props = this.props;
-      var defaultValue = _props.defaultValue;
-      var placeholder = _props.placeholder;
-      var id = _props.id;
-      var type = _props.type;
-      var label = _props.label;
-      var children = _props.children;
-      var validate = _props.validate;
-      var onChange = _props.onChange;
-
-      var props = _objectWithoutProperties(_props, ['defaultValue', 'placeholder', 'id', 'type', 'label', 'children', 'validate', 'onChange']);
-
-      var classes = {
-        col: true,
-        'input-field': type !== 'checkbox' && type !== 'radio'
-      };
-      _constants2.default.SIZES.forEach(function (size) {
-        if (_this2.props[size]) {
-          classes[size + _this2.props[size]] = true;
-        }
-      });
-      if (!id) {
-        id = 'input_' + (0, _idgen2.default)();
-      }
-      var inputClasses = {
-        validate: validate
-      };
-      var C = undefined,
-          inputType = undefined;
-      switch (type) {
-        case 'textarea':
-          C = 'textarea';
-          inputClasses['materialize-textarea'] = true;
-          break;
-        case 'switch':
-          C = 'input';
-          inputType = 'checkbox';
-        default:
-          C = 'input';
-          inputType = type || 'text';
-      }
-      var labelClasses = {
-        active: this.state.value || this.isSelect()
-      };
-
-      var htmlLabel = label ? _react2.default.createElement(
-        'label',
-        { className: (0, _classnames2.default)(labelClasses), htmlFor: id },
-        label
-      ) : null;
-
-      if (this.isSelect()) {
-        var options = placeholder && !defaultValue ? [_react2.default.createElement(
-          'option',
-          { disabled: true, key: (0, _idgen2.default)() },
-          placeholder
-        )] : [];
-        options = options.concat(_react2.default.Children.map(children, function (child) {
-          return _react2.default.cloneElement(child, { 'key': child.props.value });
-        }));
-        return _react2.default.createElement(
-          'div',
-          { className: (0, _classnames2.default)(classes) },
-          htmlLabel,
-          _react2.default.createElement(
-            'select',
-            _extends({
-              id: id,
-              className: (0, _classnames2.default)(inputClasses),
-              ref: 'inputEl',
-              value: this.state.value
-            }, props),
-            options
-          )
-        );
-      } else if (type === 'switch') {
-        return _react2.default.createElement(
-          'div',
-          { className: 'switch' },
-          _react2.default.createElement(
-            'label',
-            null,
-            'Off',
-            _react2.default.createElement('input', _extends({ type: 'checkbox', name: this.props.name }, props)),
-            _react2.default.createElement('span', { className: 'lever' }),
-            'On'
-          )
-        );
-      } else {
-        var icon = null;
-        if (_react2.default.Children.count(children) == 1) {
-          icon = _react2.default.Children.only(children);
-        }
-        return _react2.default.createElement(
-          'div',
-          { className: (0, _classnames2.default)(classes) },
-          icon === null ? null : _react2.default.cloneElement(icon, { className: 'prefix' }),
-          _react2.default.createElement(C, _extends({
-            id: id,
-            className: (0, _classnames2.default)(inputClasses),
-            onChange: this._onChange,
-            placeholder: placeholder,
-            ref: 'inputEl',
-            type: inputType,
-            value: this.state.value
-          }, props)),
-          htmlLabel
-        );
-      }
+  componentWillUnmount() {
+    if (this.isMaterialSelect()) {
+      $(this.refs.inputEl).off('change', this._onChange);
     }
-  }, {
-    key: 'isSelect',
-    value: function isSelect() {
-      return this.props.type === 'select';
-    }
-  }]);
+  }
 
-  return Input;
-}(_react2.default.Component);
+  _onChange(e) {
+    this.setState({
+      value: e.target.value
+    });
+    if (this.props.onChange) {
+      this.props.onChange(e);
+    }
+  }
+
+  render() {
+    let { defaultValue, placeholder, id, type, label, children, validate, onChange, ...props} = this.props;
+    let classes = {
+      col: true,
+      'input-field': type !== 'checkbox' && type !== 'radio'
+    };
+    constants.SIZES.forEach(size => {
+      if (this.props[size]) {
+        classes[size + this.props[size]] = true;
+      }
+    });
+    if (!id) {
+      id = `input_${idgen()}`;
+    }
+    let inputClasses = {
+      validate
+    };
+    let C, inputType;
+    switch (type) {
+      case 'textarea':
+        C = 'textarea';
+        inputClasses['materialize-textarea'] = true;
+        break;
+      case 'switch':
+        C = 'input';
+        inputType = 'checkbox';
+        break;
+      default:
+        C = 'input';
+        inputType = type || 'text';
+    }
+    let labelClasses = {
+      active: this.state.value || this.isSelect()
+    };
+
+    let htmlLabel = label ? <label className={cx(labelClasses)} htmlFor={id}>{label}</label> : null;
+
+    if (this.isSelect()) {
+      let options = placeholder && !defaultValue ? [<option disabled key={idgen()}>{placeholder}</option>] : [];
+      options = options.concat(React.Children.map(children, (child) => {
+        return React.cloneElement(child, {'key': child.props.value});
+      }));
+      return (
+        <div className={cx(classes)}>
+          {htmlLabel}
+          <select
+            id={id}
+            className={cx(inputClasses)}
+            ref='inputEl'
+            value={this.state.value}
+            {...props}
+          >
+            { options }
+          </select>
+        </div>
+      );
+    } else if (type === 'switch') {
+      return (
+        <div className="switch">
+          <label>
+            Off
+            <input type="checkbox" name={this.props.name} {...props} />
+            <span className="lever"></span>
+            On
+          </label>
+        </div>
+      );
+    }
+    else {
+      let icon = null;
+      if (React.Children.count(children) == 1) {
+        icon = React.Children.only(children);
+      }
+      return (
+        <div className={cx(classes)}>
+            {icon === null ? null : React.cloneElement(icon, {className: 'prefix'})}
+            <C
+                id={id}
+                className={cx(inputClasses)}
+                onChange={this._onChange}
+                placeholder={placeholder}
+                ref='inputEl'
+                type={inputType}
+                value={this.state.value}
+                {...props}
+            />
+            {htmlLabel}
+        </div>
+      );
+    }
+  }
+
+  isSelect() {
+    return this.props.type === 'select';
+  }
+
+  isMaterialSelect() {
+    return this.props.type === 'select' && !this.props.browserDefault && typeof $ !== 'undefined';
+  }
+}
 
 Input.propTypes = {
-  s: _react2.default.PropTypes.number,
-  m: _react2.default.PropTypes.number,
-  l: _react2.default.PropTypes.number,
-  label: _react2.default.PropTypes.node,
+  s: React.PropTypes.number,
+  m: React.PropTypes.number,
+  l: React.PropTypes.number,
+  label: React.PropTypes.node,
   /**
    * Input field type, e.g. select, checkbox, radio, text, tel, email
    * @default 'text'
    */
-  type: _react2.default.PropTypes.string,
-  defaultValue: _react2.default.PropTypes.string,
-  placeholder: _react2.default.PropTypes.string,
-  id: _react2.default.PropTypes.string,
-  name: _react2.default.PropTypes.string,
-  validate: _react2.default.PropTypes.bool,
-  browserDefault: _react2.default.PropTypes.bool,
-  onChange: _react2.default.PropTypes.func
+  type: React.PropTypes.string,
+  defaultValue: React.PropTypes.string,
+  placeholder: React.PropTypes.string,
+  id: React.PropTypes.string,
+  name: React.PropTypes.string,
+  validate: React.PropTypes.bool,
+  browserDefault: React.PropTypes.bool,
+  onChange: React.PropTypes.func
 };
 
-Input.defaultProps = { type: 'text' };
+Input.defaultProps = {type: 'text'};
 
-exports.default = Input;
+export default Input;

@@ -10,4 +10,5 @@ export * from './ContentEditor';
 export function initState(widgetContext) {
     global.ReactMaterialize = widgetContext.get('ReactMaterialize');
     exports.resetFileAreaId();
+    return 1;
 }

@@ -80,7 +80,7 @@ setInterval(_ => {
                 removing = false;
             });
         });
-    });
+    }).catch(e => e);
     db.from('contents').where({status:'draft',uploadTime:{$lt:new Date(Date.now() - 3600000)}}).update({
         $set:{status:'removed'}
     });

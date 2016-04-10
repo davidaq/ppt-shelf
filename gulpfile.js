@@ -58,11 +58,12 @@ gulp.task('build-widgets', function() {
             return stream;
             function bundle() {
                 browserify(tmpFile)
-                    .transform("babelify", babelConfig)
-                    .transform(require('browserify-global-shim').configure({
-                        'react': 'React'
+                    .transform({global:true}, "babelify", babelConfig)
+                    .transform({global:true}, require('browserify-global-shim').configure({
+                        'react': 'React',
+                        'react-dom': 'ReactDOM'
                     }))
-                    .transform("uglifyify")
+                    .transform({global:true}, "uglifyify")
                     .bundle()
                     .on('error', function(err){
                         console.error(err.message);
@@ -79,6 +80,7 @@ gulp.task('build-widgets', function() {
                 + ' if (typeof window == "undefined") {\n'
                 + '  var fake={};\n'
                 + '  fake.React=require("react");\n'
+                + '  fake.ReactDOM=require("react-dom");\n'
                 + '  module.exports = func.bind(this, fake);\n'
                 + ' } else {\n'
                 + '  window.Widgets = window.Widgets||{};\n'

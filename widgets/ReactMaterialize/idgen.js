@@ -1,18 +1,11 @@
-"use strict";
+let id = 0;
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.resetID = resetID;
-exports.default = idgen;
-var id = 0;
-
-function resetID() {
+export function resetID() {
   id = 0;
 }
 
-function idgen() {
-  var oldId = id;
+export default function idgen() {
+  let oldId = id;
   id += 1;
   return oldId;
 }

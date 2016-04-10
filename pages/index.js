@@ -53,7 +53,7 @@ export default function(props, children, widgets) {
                 </div>
                 <div className="content-thumbs row">
                     <For each="item" of={res.list}>
-                        <a href={"content.page?id=" + item._id} className="columns small-6 medium-4 large-3">
+                        <a href={"content.page?id=" + item._id} className="columns small-6 medium-4 large-3" key={item._id}>
                             <div className="item">
                                 <div className="thumb" style={{backgroundImage:'url(ppt/' + item._id + '/thumb-' + (item.cover + 1) + '.png)'}}/>
                                 <div className="desc">

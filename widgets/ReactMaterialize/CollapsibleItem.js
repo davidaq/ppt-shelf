@@ -1,132 +1,78 @@
-'use strict';
+import React from 'react';
+import cx from 'classnames';
+import Icon from './Icon';
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _react = require('react');
-
-var _react2 = _interopRequireDefault(_react);
-
-var _classnames = require('classnames');
-
-var _classnames2 = _interopRequireDefault(_classnames);
-
-var _Icon = require('./Icon');
-
-var _Icon2 = _interopRequireDefault(_Icon);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var CollapsibleItem = function (_React$Component) {
-  _inherits(CollapsibleItem, _React$Component);
-
-  function CollapsibleItem(props) {
-    _classCallCheck(this, CollapsibleItem);
-
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(CollapsibleItem).call(this, props));
-
-    _this.state = { expanded: _this.props.expanded };
-    _this.handleClick = _this.handleClick.bind(_this);
-    _this.renderBody = _this.renderBody.bind(_this);
-    _this.renderIcon = _this.renderIcon.bind(_this);
-    return _this;
+class CollapsibleItem extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {expanded: this.props.expanded};
+    this.handleClick = this.handleClick.bind(this);
+    this.renderBody = this.renderBody.bind(this);
+    this.renderIcon = this.renderIcon.bind(this);
   }
 
-  _createClass(CollapsibleItem, [{
-    key: 'render',
-    value: function render() {
-      var _props = this.props;
-      var node = _props.node;
-      var header = _props.header;
-      var expanded = _props.expanded;
-      var icon = _props.icon;
-      var children = _props.children;
+  render() {
+    let {node, header, expanded, icon, children, ...props} = this.props;
+    let C = node || 'a';
+    let classes = {
+      'collapsible-header': true,
+    };
 
-      var props = _objectWithoutProperties(_props, ['node', 'header', 'expanded', 'icon', 'children']);
+    return (
+      <li {...props}>
+        <C className={cx(classes)} onClick={this.handleClick}>
+          {icon ? this.renderIcon(icon) : null}
+          {header}
+        </C>
+        {this.state.expanded ? this.renderBody() : null}
+      </li>
+    );
+  }
 
-      var C = node || 'a';
-      var classes = {
-        'collapsible-header': true
-      };
+  handleClick() {
+    if (this.props.onSelect) {
+      this.props.onSelect(this.props.eventKey);
+    } else {
+      this.setState({expanded: !this.state.expanded});
+    }
+  }
 
-      return _react2.default.createElement(
-        'li',
-        props,
-        _react2.default.createElement(
-          C,
-          { className: (0, _classnames2.default)(classes), onClick: this.handleClick },
-          icon ? this.renderIcon(icon) : null,
-          header
-        ),
-        this.state.expanded ? this.renderBody() : null
-      );
-    }
-  }, {
-    key: 'handleClick',
-    value: function handleClick() {
-      if (this.props.onSelect) {
-        this.props.onSelect(this.props.eventKey);
-      } else {
-        this.setState({ expanded: !this.state.expanded });
-      }
-    }
-  }, {
-    key: 'renderBody',
-    value: function renderBody() {
-      var style = { display: 'block' };
-      return _react2.default.createElement(
-        'div',
-        { className: 'collapsible-body', style: style },
-        this.props.children
-      );
-    }
-  }, {
-    key: 'renderIcon',
-    value: function renderIcon(icon) {
-      return _react2.default.createElement(
-        _Icon2.default,
-        null,
-        icon
-      );
-    }
-  }]);
+  renderBody() {
+    let style = {display: 'block'};
+    return (
+      <div className='collapsible-body' style={style}>
+        {this.props.children}
+      </div>
+    );
+  }
 
-  return CollapsibleItem;
-}(_react2.default.Component);
+  renderIcon(icon) {
+    return <Icon>{icon}</Icon>;
+  }
+}
 
 CollapsibleItem.propTypes = {
-  header: _react2.default.PropTypes.string.isRequired,
-  icon: _react2.default.PropTypes.string,
-  onSelect: _react2.default.PropTypes.func,
+  header: React.PropTypes.string.isRequired,
+  icon: React.PropTypes.string,
+  onSelect: React.PropTypes.func,
   /**
    * If the item is expanded by default
    * @default false
    */
-  expanded: _react2.default.PropTypes.bool,
+  expanded: React.PropTypes.bool,
   /**
    * The value to pass to the onSelect callback
    */
-  eventKey: _react2.default.PropTypes.any,
+  eventKey: React.PropTypes.any,
   /**
    * The node type of the header
    * @default a
    */
-  node: _react2.default.PropTypes.node
-};
+  node: React.PropTypes.node,
+}
 
 CollapsibleItem.defaultProps = {
-  expanded: false
+  expanded: false,
 };
 
-exports.default = CollapsibleItem;
+export default CollapsibleItem;

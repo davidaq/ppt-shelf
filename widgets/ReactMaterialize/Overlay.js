@@ -1,98 +1,64 @@
-'use strict';
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _react = require('react');
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactDom = require('react-dom');
-
-var _reactDom2 = _interopRequireDefault(_reactDom);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Overlay = function (_React$Component) {
-  _inherits(Overlay, _React$Component);
-
-  function Overlay(props) {
-    _classCallCheck(this, Overlay);
-
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(Overlay).call(this, props));
+class Overlay extends React.Component {
+  constructor(props) {
+    super(props);
   }
 
-  _createClass(Overlay, [{
-    key: 'componentWillUnmount',
-    value: function componentWillUnmount() {
-      this._unrenderOverlay();
-      if (this._overlayTarget) {
-        this.getContainerDOMNode().removeChild(this._overlayTarget);
-        this._overlayTarget = null;
-      }
+  componentWillUnmount() {
+    this._unrenderOverlay();
+    if (this._overlayTarget) {
+      this.getContainerDOMNode()
+        .removeChild(this._overlayTarget);
+      this._overlayTarget = null;
     }
-  }, {
-    key: 'componentDidUpdate',
-    value: function componentDidUpdate() {
-      this._renderOverlay();
-    }
-  }, {
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      this._renderOverlay();
-    }
-  }, {
-    key: '_mountOverlayTarget',
-    value: function _mountOverlayTarget() {
-      this._overlayTarget = document.createElement('div');
-      this.getContainerDOMNode().appendChild(this._overlayTarget);
-    }
-  }, {
-    key: '_renderOverlay',
-    value: function _renderOverlay() {
-      if (!this._overlayTarget) {
-        this._mountOverlayTarget();
-      }
+  }
 
-      // Save reference to help testing
-      this._overlayInstance = _reactDom2.default.render(this.renderOverlay(), this._overlayTarget);
-    }
-  }, {
-    key: '_unrenderOverlay',
-    value: function _unrenderOverlay() {
-      _react2.default.unmountComponentAtNode(this._overlayTarget);
-      this._overlayInstance = null;
-    }
-  }, {
-    key: 'getOverlayDOMNode',
-    value: function getOverlayDOMNode() {
-      if (!this.isMounted()) {
-        throw new Error('getOverlayDOMNode(): A component must be mounted to have a DOM node.');
-      }
+  componentDidUpdate() {
+    this._renderOverlay();
+  }
 
-      return this._overlayInstance.getDOMNode();
-    }
-  }, {
-    key: 'getContainerDOMNode',
-    value: function getContainerDOMNode() {
-      return this.props.container.getDOMNode ? this.props.container.getDOMNode() : this.props.container;
-    }
-  }]);
+  componentDidMount() {
+    this._renderOverlay();
+  }
 
-  return Overlay;
-}(_react2.default.Component);
+  _mountOverlayTarget() {
+    this._overlayTarget = document.createElement('div');
+    this.getContainerDOMNode()
+      .appendChild(this._overlayTarget);
+  }
+
+  _renderOverlay() {
+    if (!this._overlayTarget) {
+      this._mountOverlayTarget();
+    }
+
+    // Save reference to help testing
+    this._overlayInstance = ReactDOM.render(this.renderOverlay(), this._overlayTarget);
+  }
+
+  _unrenderOverlay() {
+    React.unmountComponentAtNode(this._overlayTarget);
+    this._overlayInstance = null;
+  }
+
+  getOverlayDOMNode() {
+    if (!this.isMounted()) {
+      throw new Error('getOverlayDOMNode(): A component must be mounted to have a DOM node.');
+    }
+
+    return this._overlayInstance.getDOMNode();
+  }
+
+  getContainerDOMNode() {
+    return this.props.container.getDOMNode ?
+      this.props.container.getDOMNode() : this.props.container;
+  }
+}
 
 Overlay.propTypes = {
-  container: _react2.default.PropTypes.any.isRequired
+  container: React.PropTypes.any.isRequired
 };
 
 Overlay.defaultProps = {
@@ -108,4 +74,4 @@ Overlay.defaultProps = {
   }
 };
 
-exports.default = Overlay;
+export default Overlay;
