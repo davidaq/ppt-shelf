@@ -63,6 +63,7 @@ export class FileArea extends React.Component {
             fname = fname.substr(0, 13) + '……';
         this.setState({progress: 1,fname});
         var xhr = new XMLHttpRequest();
+        console.log(file);
         xhr.upload.onprogress = e => {
             console.log(e.loaded, e.total);
             this.setState({progress:1 + Math.ceil((e.loaded / e.total) * 98)});
