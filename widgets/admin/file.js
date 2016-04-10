@@ -73,7 +73,7 @@ export class FileArea extends React.Component {
                 this.props.onDone ? this.props.onDone(xhr.responseText) : this.setState({progress:0});
             }
         };
-        xhr.open('PUT', this.props.postTo, true);
+        xhr.open('POST', this.props.postTo, true);
         var formData = new FormData();
         formData.append(this.props.postField || "thefile", file);
         xhr.send(formData);
