@@ -15,7 +15,11 @@ export class Login extends React.Component {
                         <Input name="password" label="密码" type="password"/>
                         <Cases>
                             <Preloader flashing if={this.state.loading}/>
-                            <Button waves="light" onClick={this.login.bind(this)}>登录</Button>
+                            <div>
+                                <Button type="button" className="blue" waves="light" onClick={e => document.location.replace('/')}>回首页</Button>
+                                &nbsp;
+                                <Button waves="light" className="red" onClick={this.login.bind(this)}>登录</Button>
+                            </div>
                         </Cases>
                     </div>
                 </div>

@@ -9,7 +9,7 @@ export default function(props, children, widgets) {
                     {settings.siteName}
                 </a>
                 <div className="controls">
-                    <a href="admin.page">登陆</a>
+                    <a href="admin.page">登录</a>
                     <span className="sep"/>
                     <a href="tags.page">标签云</a>
                     <span className="sep"/>

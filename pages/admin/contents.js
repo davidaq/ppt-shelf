@@ -67,3 +67,21 @@ export default function(props, children, widgets) {
             })
     });
 };
+
+import rmdir from 'rmdir-recursive';
+
+var removing;
+setInterval(_ => {
+    if (removing) return;
+    db.from('contents').where({status:'removed'}).first().then(content => {
+        removing = true;
+        rmdir('contents/' + content._id, _ => {
+            db.from('contents').where({_id:content._id}).remove().then(_ => {
+                removing = false;
+            });
+        });
+    });
+    db.from('contents').where({status:'draft',uploadTime:{$lt:new Date(Date.now() - 3600000)}}).update({
+        $set:{status:'removed'}
+    });
+}, 3000);
