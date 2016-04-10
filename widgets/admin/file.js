@@ -73,8 +73,7 @@ export class FileArea extends React.Component {
             };
             xhr.onreadystatechange = () => {
                 if (xhr.readyState == XMLHttpRequest.DONE) {
-                    console.log(xhr);
-                    //this.props.onDone ? this.props.onDone(xhr.responseText) : this.setState({progress:0});
+                    this.props.onDone ? this.props.onDone(xhr.responseText) : this.setState({progress:0});
                 }
             };
             xhr.open('POST', this.props.postTo, true);
