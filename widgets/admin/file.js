@@ -64,6 +64,7 @@ export class FileArea extends React.Component {
         this.setState({progress: 1,fname});
         var xhr = new XMLHttpRequest();
         xhr.upload.onprogress = e => {
+            console.log(e.loaded, e.total);
             this.setState({progress:1 + Math.ceil((e.loaded / e.total) * 98)});
         };
         xhr.onreadystatechange = () => {
