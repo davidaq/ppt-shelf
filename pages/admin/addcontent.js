@@ -7,6 +7,7 @@ var extract = Lrequire('lib/ppt-extract');
 export default function(props, children, widgets) {
     return auth(props.request).then(user => {
         if(props.request.method == 'post') {
+            console.log('POST');
             if (props.request.payload.status) {
                 var id = props.request.payload.status;
                 if (extract.current().id == id) {
