@@ -33,6 +33,7 @@ export default function(props, children, widgets) {
                         });
                     });
                 }).then(_ => {
+                    console.log({id});
                     return {id};
                 }).catch(e => {
                     console.error(e.stack || e);
