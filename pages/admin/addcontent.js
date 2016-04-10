@@ -34,6 +34,9 @@ export default function(props, children, widgets) {
                     });
                 }).then(_ => {
                     return {id};
+                }).catch(e => {
+                    console.error(e.stack || e);
+                    throw e;
                 });
             }
         } else if(props.request.query.file) {

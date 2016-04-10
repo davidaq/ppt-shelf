@@ -78,8 +78,7 @@ export class FileArea extends React.Component {
                 }
             };
             xhr.open('POST', this.props.postTo, true);
-            xhr.setRequestHeader("Content-type", "application/json");
-            xhr.send('{"fileContent":"' + result + '"}');
+            xhr.send('fileContent=' + encodeURIComponent(result));
         };
         reader.readAsDataURL(file);
     }
