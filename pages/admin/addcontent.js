@@ -25,6 +25,7 @@ export default function(props, children, widgets) {
                 return {text:'处理中'};
             } else if (props.request.payload.fileContent) {
                 var id = shortid();
+                console.log('upload', id);
                 return new Promise((resolve,reject) => {
                     fs.mkdir('uploads', err => {
                         try {
@@ -37,6 +38,7 @@ export default function(props, children, widgets) {
                         }
                     });
                 }).then(_ => {
+                    console.log('<<', {id});
                     return {id};
                 }).catch(e => {
                     console.error(e.stack || e);
