@@ -1,4 +1,5 @@
 import auth from './-auth';
+import escape from 'escape-string-regexp';
 
 var pageLimit = 20;
 
@@ -17,6 +18,23 @@ export default function(props, children, widgets) {
         var where = {status:'ready'};
         if (props.request.query.user)
             where.user = props.request.query.user;
+        if (props.request.query.search) {
+            var search = props.request.query.search;
+            if (search[0] == '#') {
+                where.tags = search.substr(1);
+            } else {
+                var regex = {$regex:'.*' + escape(search) + '.*'};
+                where.$or = [{
+                    title: regex
+                },{
+                    text: regex
+                },{
+                    lyric: regex
+                },{
+                    tags: search
+                }];
+            }
+        }
         return db.from('contents')
             .where(where)
             .skip(page * pageLimit)
@@ -27,11 +45,18 @@ export default function(props, children, widgets) {
                 return db.from('contents').where(where).count();
             }).then(count => {
                 res.count = count;
-                var {ContentList} = widgets.get('admin');
-                var {Pagination,Icon} = widgets.get('ReactMaterialize');
+                var {ContentList,ContentSearch} = widgets.get('admin');
+                var {Pagination,Icon,Row,Col} = widgets.get('ReactMaterialize');
                 return <include path="./nav" user={user} title="内容列表" active="contents">
-                    <Pagination items={Math.ceil(res.count / pageLimit)} activePage={page + 1} maxButtons={8}
-                        onSelect={p => setQuery({page:p})}/>
+                    <Row>
+                        <Col s={12} m={7} l={8}>
+                            <Pagination items={Math.ceil(res.count / pageLimit)} activePage={page + 1} maxButtons={8}
+                                onSelect={p => setQuery({page:p})}/>
+                        </Col>
+                        <Col s={12} m={5} l={4}>
+                            <ContentSearch search={props.request.query.search}/>
+                        </Col>
+                    </Row>
                     <ContentList list={res.list}/>
                     <div className="fixed-action-btn">
                         <a className="btn-floating btn-large waves-effect waves-light red horizontal" href='addcontent.page'>

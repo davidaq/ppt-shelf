@@ -53,7 +53,7 @@ function setQuery(params) {
     }
     params = [];
     for (var k in query) {
-        params.push(encodeURIComponent(k) + '=' + encodeURIComponent(query[k]));
+        params.push(encodeURIComponent(k) + '=' + query[k]);
     }
     document.location.href = '?' + params.join('&');
 }

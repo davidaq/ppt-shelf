@@ -1,0 +1,241 @@
+body, html {
+    font-family: 微软雅黑,黑体简,黑体;
+    background: #EEE;
+}
+.nav {
+    background: #191919;
+    color: #DDD;
+    padding: 0 20px;
+    overflow: hidden;
+    zoom: 1;
+    width: 100%;
+    height: 60px;
+    line-height: 60px;
+    font-size: 15px;
+    position: fixed;
+    z-index: 3;
+    top: 0;
+}
+.nav-pad {
+    height: 60px;
+}
+.nav a {
+    font-weight: bold;
+    color: #DDD;
+}
+.nav a:hover {
+    color: #FFF;
+}
+.nav .brand {
+    font-weight: bold;
+    float: left;
+    font-size: 20px;
+}
+.nav .controls {
+    float: right;
+}
+.nav .controls a {
+    float: right;
+}
+.nav .controls .sep {
+    height: 20px;
+    width: 1px;
+    background: #555;
+    float: right;
+    margin: 20px 15px;
+}
+
+.discover-pad {
+    height: 260px;
+}
+.discover {
+    background: #333 url(/images/discoverbg.jpg) center center;
+    background-size: cover;
+    width: 100%;
+    height: 260px;
+    position: fixed;
+    z-index: 0;
+    top: 0;
+}
+.discover .slogan {
+    color: #FFF;
+    font-size: 27px;
+    padding-top: 100px;
+    padding-bottom: 20px;
+    text-align: center;
+}
+.discover .search {
+    width: 80%;
+    max-width: 350px;
+    margin: 0 auto;
+    background: url(/images/dark-transparent.png);
+    overflow: hidden;
+    zoom: 1;
+    border-radius: 5px;
+}
+.discover .search input {
+    display: block;
+    background: transparent;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    width: 75%;
+    color: #FFF;
+    float: left;
+    margin: 0;
+}
+.discover .search .sep {
+    display: block;
+    width: 1px;
+    margin: 5px 0;
+    height: 28px;
+    background: #555;
+    float: right;
+}
+.discover .search a {
+    display: block;
+    float: right;
+    color: #CCC;
+    width: 23%;
+    text-align: center;
+    line-height: 34px;
+}
+.discover .search a:hover {
+    color: #FFF;
+}
+
+.main-body {
+    position: relative;
+    z-index: 1;
+    background: #EEE;
+}
+
+.sort-n-filters {
+    background: #FFF;
+    height: 50px;
+    box-shadow: 0 0 3px #AAA;
+    text-align: center;
+    line-height: 50px;
+    font-size: 15px;
+    overflow: hidden;
+}
+.sort-n-filters ul {
+    margin-top: 10px;
+}
+.sort-n-filters .controls {
+    float: right;
+}
+.sort-n-filters .controls a {
+    margin: 10px;
+    color: #99A;
+}
+.sort-n-filters .controls a:hover {
+    color: #BBB;
+}
+.sort-n-filters .controls a.active {
+    color: #555;
+}
+.sort-n-filters .pager {
+    float: left;
+}
+
+.content-thumbs .columns {
+    padding: 5px;
+}
+.content-thumbs .item {
+    background: #FFF;
+    border-radius: 3px;
+    box-shadow: 2px 1px 3px #CCC;
+    overflow: hidden;
+    padding: 7px;
+    font-size: 15px;
+    line-height: 20px;
+    color: #777;
+    -webkit-transition: box-shadow 0.3s;
+}
+.content-thumbs a.columns:hover .item {
+    box-shadow: 1px 1px 7px #999;
+}
+.content-thumbs .item .thumb {
+    width: 100%;
+    height: 0;
+    padding-bottom: 75%;
+    background-position: center center;
+    background-size: cover;
+    border: 1px solid #EEE;
+    margin-bottom: 10px;
+}
+.content-thumbs .item .desc {
+    overflow: hidden;
+    zoom: 1;
+}
+.content-thumbs .item .desc .title {
+    float: left;
+}
+.content-thumbs .item .desc .downloads {
+    float: right;
+    padding-left: 17px;
+    background: url(/images/download.png) no-repeat left center;
+    font-size: 0.9em;
+}
+.content-thumbs .item .desc .views {
+    float: right;
+    padding-left: 20px;
+    background: url(/images/eye.png) no-repeat left center;
+    padding-right: 10px;
+    font-size: 0.9em
+}
+
+.heading {
+    overflow: hidden;
+    zoom: 1;
+}
+.heading .left {
+    float: left;
+}
+.heading .right {
+    float: right;
+}
+.heading .right a {
+    display: block;
+    color: #FFF;
+    background: #999;
+    margin: 5px;
+    height: 50px;
+    line-height: 50px;
+    width: 150px;
+    text-align: center;
+    border-radius: 5px;
+}
+.heading .right a:hover {
+    background: #AAA;
+}
+.slide-preview {
+}
+.slide-preview .large {
+    width: 100%;
+    height: 0;
+    border: 1px solid #DDD;
+    box-shadow: 2px 1px 5px #CCC;
+    background: #FFF;
+    padding-bottom: 75%;
+    background-size: contain;
+    background-position: center center;
+}
+.tags {
+    background: #F7F7F7;
+    padding: 5px;
+    border-radius: 3px;
+}
+.tags label {
+    margin-bottom: 5px;
+}
+.tags .tag {
+    padding: 3px 5px;
+    font-size: 0.9em;
+    color: #777;
+}
+.tags .tag:hover {
+    color: #333;
+    background: #DDD;
+}

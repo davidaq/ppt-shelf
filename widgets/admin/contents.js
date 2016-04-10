@@ -1,15 +1,13 @@
 import React from 'react';
 
-var {Row, Col, Card, CardTitle, Icon, Button, Modal} = widgets.get('ReactMaterialize');
+var {Row, Col, Card, CardTitle, Icon, Button, Modal, Input} = widgets.get('ReactMaterialize');
 
 export class ContentList extends React.Component {
     render() {
         return <div className="content-list">
-            <div>
-            </div>
             <Row>
                 <For each="item" of={this.props.list}>
-                    <Col key={item._id} s={12} m={6} l={4}>
+                    <Col key={item._id} s={12} m={4} l={3}>
                         <Card 
                             header={<div className="thumb" style={{backgroundImage:"url(/ppt/" + item._id + "/thumb-" + (item.cover + 1) + '.png)'}}/>}
                             actions={[
@@ -35,5 +33,21 @@ export class ContentList extends React.Component {
         ajax('contents.page', {remove:id}, r => {
             document.location.reload();
         });
+    }
+}
+
+var searchTimeout;
+export class ContentSearch extends React.Component {
+    render() {
+        return <Input type="text" label="搜索" s={12} onKeyDown={this.key.bind(this)} defaultValue={this.props.search}/>
+    }
+    key(e) {
+        if (e.keyCode == 13) {
+            var val = e.target.value;
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                document.location.replace('?search=' + val);
+            }, 200);
+        }
     }
 }
