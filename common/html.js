@@ -15,8 +15,8 @@ export default function(props={}, children, widgets) {
             <script type="text/javascript" src="http://cdn.bootcss.com/react/0.14.7/react.min.js" if={!DEVMODE}/>
             <script type="text/javascript" src="http://cdn.bootcss.com/react/0.14.7/react-dom.min.js"/>
             <script if={props.materialize} type="text/javascript" src="http://cdn.bootcss.com/materialize/0.97.5/js/materialize.min.js"/>
-            <link if={props.materialize} type="text/javascript" rel="stylesheet" href="http://cdn.bootcss.com/materialize/0.97.5/css/materialize.min.css"/>
-            <link if={props.materialize} type="text/javascript" rel="stylesheet" href="/css/materialicons.css"/>
+            <link if={props.materialize} type="text/css" rel="stylesheet" href="http://cdn.bootcss.com/materialize/0.97.5/css/materialize.min.css"/>
+            <link if={props.materialize} type="text/css" rel="stylesheet" href="/css/materialicons.css"/>
         </head>
         <body>
             {children}
