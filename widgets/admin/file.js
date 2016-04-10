@@ -62,21 +62,26 @@ export class FileArea extends React.Component {
         if (fname.length > 15)
             fname = fname.substr(0, 13) + '……';
         this.setState({progress: 1,fname});
-        var xhr = new XMLHttpRequest();
-        console.log(file);
-        xhr.upload.onprogress = e => {
-            console.log(e.loaded, e.total);
-            this.setState({progress:1 + Math.ceil((e.loaded / e.total) * 98)});
+        
+        var reader = new FileReader();
+        reader.onload = () => {
+            var result = reader.result.replace(/^data:.*?base64,/, '');
+            this.setState({progress: 2});
+            var xhr = new XMLHttpRequest();
+            xhr.upload.onprogress = e => {
+                console.log(e.loaded, e.total);
+                this.setState({progress:1 + Math.ceil((e.loaded / e.total) * 97)});
+            };
+            xhr.onreadystatechange = () => {
+                if (xhr.readyState == XMLHttpRequest.DONE) {
+                    this.props.onDone ? this.props.onDone(xhr.responseText) : this.setState({progress:0});
+                }
+            };
+            xhr.open('POST', this.props.postTo, true);
+            xhr.setRequestHeader("Content-type", "application/json");
+            xhr.send('{"fileContent":"' + result + '"}');
         };
-        xhr.onreadystatechange = () => {
-            if (xhr.readyState == XMLHttpRequest.DONE) {
-                this.props.onDone ? this.props.onDone(xhr.responseText) : this.setState({progress:0});
-            }
-        };
-        xhr.open('POST', this.props.postTo, true);
-        var formData = new FormData();
-        formData.append(this.props.postField || "thefile", file);
-        xhr.send(formData);
+        reader.readAsDataURL(file);
     }
 }
 

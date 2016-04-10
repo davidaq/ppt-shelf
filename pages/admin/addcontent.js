@@ -6,40 +6,36 @@ var extract = Lrequire('lib/ppt-extract');
 
 export default function(props, children, widgets) {
     return auth(props.request).then(user => {
-        if (props.request.method == 'put') {
-            var thefile = props.request.payload.thefile;
-            if (thefile && typeof thefile.pipe == 'function') {
+        if(props.request.method == 'post') {
+            if (props.request.payload.status) {
+                var id = props.request.payload.status;
+                if (extract.current().id == id) {
+                    return {text:extract.current().status};
+                } else {
+                    return new Promise(resolve => {
+                        fs.exists('uploads/' + id + '.upl', resolve);
+                    }).then(exists => {
+                        if (exists) {
+                            return {text:'检查文件安全性'};
+                        } else {
+                            return {redirect:true};
+                        }
+                    });
+                }
+                return {text:'处理中'};
+            } else if (props.request.payload.fileContent) {
                 var id = shortid();
                 return new Promise(resolve => {
                     fs.mkdir('uploads', err => {
-                        var ostream = fs.createWriteStream('uploads/' + id + '.upl');
-                        ostream.once('finish', err => {
+                        var content = new Buffer(props.request.payload.fileContent, 'base64');
+                        fs.writeFile('uploads/' + id + '.upl', content, err => {
                             resolve();
                         });
-                        thefile.pipe(ostream);
                     });
                 }).then(_ => {
                     return {id};
                 });
-            } else {
-                return '';
             }
-        } else if(props.request.method == 'post' && props.request.payload.status) {
-            var id = props.request.payload.status;
-            if (extract.current().id == id) {
-                return {text:extract.current().status};
-            } else {
-                return new Promise(resolve => {
-                    fs.exists('uploads/' + id + '.upl', resolve);
-                }).then(exists => {
-                    if (exists) {
-                        return {text:'检查文件安全性'};
-                    } else {
-                        return {redirect:true};
-                    }
-                });
-            }
-            return {text:'处理中'};
         } else if(props.request.query.file) {
             var {Icon, Preloader, Row, Col} = widgets.get('ReactMaterialize');
             var {PPTStatus} = widgets.get('admin');
