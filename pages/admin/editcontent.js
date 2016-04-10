@@ -9,7 +9,7 @@ export default function(props, children, widgets) {
             }
             pdata.data.status = 'ready';
             if (pdata.data.tags) {
-                pdata.data.tags = pdata.data.tags.split(/\s+/);
+                pdata.data.tags = pdata.data.tags.split(/\s+/).filter(v => !!v);
             } else {
                 pdata.data.tags = [];
             }
